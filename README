@@ -1,0 +1,19 @@
+#1. Empty Recycle Bin#
+rd /s c:\$Recycle.Bin
+
+#2. Cleans up Old Windows updates#
+dism /online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+#3. Clean up Temp Folders#
+Remove-Item -Path $env:TEMP\* -Recurse -Force -ErrorAction SilentlyContinue
+
+#4. Deleting journal#
+fsutil usn deletejournal /d /n c:
+
+#5. Delete Shadow Copys#
+vssadmin delete shadows /for=c: /all /quiet
+
+#6. Delete eystem error memory dump#
+del /f /s /q %systemroot%\memory.dmp
+
+#Or go to System -> Storage -> Temp Files and check everything except Downloads#
